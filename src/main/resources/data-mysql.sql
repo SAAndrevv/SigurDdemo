@@ -1,0 +1,10 @@
+INSERT IGNORE INTO department (id, name) VALUES (1, "First"),
+       (2, "Second"),
+       (3, "Thitd"),
+       (4, "Fourth"),
+       (5, "Fifth"),
+       (6, "Sixth"),
+       (7, "Sevens"),
+       (8, "Eith"),
+       (9, "Ninth"),
+       (10, "Ten");
