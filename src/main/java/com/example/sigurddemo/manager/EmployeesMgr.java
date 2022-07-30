@@ -1,10 +1,9 @@
 package com.example.sigurddemo.manager;
 
-import com.example.sigurddemo.additionalBeans.RandomCardGeneration;
-import com.example.sigurddemo.additionalBeans.VirtualDate;
+import com.example.sigurddemo.additional.RandomCardGeneration;
+import com.example.sigurddemo.additional.VirtualDate;
 import com.example.sigurddemo.event.FiringEmployeeEvent;
 import com.example.sigurddemo.event.HiringEmployeeEvent;
-import com.example.sigurddemo.exception.DateException;
 import com.example.sigurddemo.model.Department;
 import com.example.sigurddemo.model.Employee;
 import com.example.sigurddemo.service.DepartmentServiceImpl;
@@ -18,7 +17,6 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;

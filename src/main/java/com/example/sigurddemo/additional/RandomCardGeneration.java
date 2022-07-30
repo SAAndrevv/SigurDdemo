@@ -1,4 +1,4 @@
-package com.example.sigurddemo.additionalBeans;
+package com.example.sigurddemo.additional;
 
 import java.util.Random;
 

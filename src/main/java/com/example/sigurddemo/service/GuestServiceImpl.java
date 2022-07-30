@@ -7,10 +7,7 @@ import com.example.sigurddemo.repository.GuestRepository;
 import lombok.NonNull;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-
 @Service
-/*@Transactional*/
 public class GuestServiceImpl extends AbstractCommonPersonService<Guest, GuestRepository>{
 
     public GuestServiceImpl(@NonNull GuestRepository repository) {

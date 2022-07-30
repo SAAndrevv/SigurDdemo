@@ -1,7 +1,7 @@
 package com.example.sigurddemo.manager;
 
-import com.example.sigurddemo.additionalBeans.RandomCardGeneration;
-import com.example.sigurddemo.additionalBeans.VirtualDate;
+import com.example.sigurddemo.additional.RandomCardGeneration;
+import com.example.sigurddemo.additional.VirtualDate;
 import com.example.sigurddemo.model.Employee;
 import com.example.sigurddemo.model.Guest;
 import com.example.sigurddemo.service.GuestServiceImpl;

@@ -6,7 +6,6 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor

@@ -2,7 +2,6 @@ package com.example.sigurddemo.listener;
 
 import com.example.sigurddemo.event.DateEvent;
 import com.example.sigurddemo.manager.EmployeesMgr;
-import com.example.sigurddemo.manager.GuestMgr;
 import com.example.sigurddemo.manager.PassEmulator;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
