@@ -91,7 +91,7 @@ public class PassEmulator {
         if (guest.getVisitDate() != null) {
             Employee employee = employeeService.getEmployeeById(guest.getPerson().getId());
             logger.info("{}", messageSource.getMessage("access.guest_allow",
-                    new Object[] {nowVirtualDate, guest.getId(), employee.getId(), employee.getDepartment().getId(), guest.getCard()}, null, null));
+                    new Object[] {nowVirtualDate, guest.getId(), employee.getId(), employee.getDepartment().getName(), guest.getCard()}, null, null));
             return;
         }
         logger.info("{}", messageSource.getMessage("access.guest_denied",

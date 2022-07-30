@@ -56,7 +56,7 @@ public class GuestMgr {
             logger.info("{}", messageSource.getMessage("guest.appointed",
                     new Object[] {guest.getId(),
                             employee.getId(),
-                            employee.getDepartment().getId(),
+                            employee.getDepartment().getName(),
                             guest.getVisitDate(),
                             VirtualDate.dateDifferenceInDays(date, guest.getVisitDate())},
                     null, null));
@@ -71,7 +71,7 @@ public class GuestMgr {
                 logger.info("{}", messageSource.getMessage("guest.canceled",
                         new Object[] {guest.getId(),
                                 employee.getId(),
-                                employee.getDepartment().getId(),
+                                employee.getDepartment().getName(),
                                 guest.getVisitDate(),
                                 employee.getFiredTime()},
                         null, null));

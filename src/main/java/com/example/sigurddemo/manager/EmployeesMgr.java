@@ -84,7 +84,7 @@ public class EmployeesMgr {
         applicationEventPublisher.publishEvent(hiringEmployeeEvent);
 
         logger.info("{}", messageSource.getMessage("employee.hiring",
-                new Object[] {nowVirtualDate, employee.getId(), employee.getHireTime(), employee.getDepartment().getId()}, null, null));
+                new Object[] {nowVirtualDate, employee.getId(), employee.getHireTime(), employee.getDepartment().getName()}, null, null));
     }
 
     private void firingEmployees() {
@@ -97,7 +97,7 @@ public class EmployeesMgr {
                         new Object[] {nowVirtualDate,
                                 employee.getId(),
                                 employee.getFiredTime(),
-                                employee.getDepartment().getId(),
+                                employee.getDepartment().getName(),
                                 VirtualDate.dateDifferenceInDays(employee.getHireTime(), nowVirtualDate)},
                         null, null));
 
