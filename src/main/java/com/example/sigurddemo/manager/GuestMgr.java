@@ -32,14 +32,12 @@ public class GuestMgr {
     private final GuestServiceImpl guestService;
     @NonNull
     private final MessageSource messageSource;
-    @NonNull
-    private final VirtualDate virtualDate;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final Random rnd = new Random();
     
-    public void makingAnAppointment(Employee employee) {
+    public void makingAnAppointment(Employee employee, Date date) {
         if (rnd.nextBoolean()) {
             Date visitDate = VirtualDate.generateRandomDateInInterval(employee.getHireTime(), Calendar.MONTH, 6);
             Guest guest = new Guest();
@@ -60,13 +58,13 @@ public class GuestMgr {
                             employee.getId(),
                             employee.getDepartment().getId(),
                             guest.getVisitDate(),
-                            VirtualDate.dateDifferenceInDays(virtualDate.getDate(), guest.getVisitDate())},
+                            VirtualDate.dateDifferenceInDays(date, guest.getVisitDate())},
                     null, null));
 
         }
     }
 
-    public void cancelGuestMeeting(Employee employee) {
+    public void cancelGuestMeeting(Employee employee, Date date) {
         try {
             Guest guest = guestService.deleteGuestByEmployeeId(employee);
             if (guest != null) {

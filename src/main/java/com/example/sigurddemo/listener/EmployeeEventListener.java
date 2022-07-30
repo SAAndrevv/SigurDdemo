@@ -19,10 +19,10 @@ public class EmployeeEventListener implements ApplicationListener<AbstractEmploy
     @Override
     public void onApplicationEvent(AbstractEmployeeEvent event) {
         if (event instanceof HiringEmployeeEvent) {
-            guestMgr.makingAnAppointment(event.getEmployee());
+            guestMgr.makingAnAppointment(event.getEmployee(), event.getDate());
         }
         else if (event instanceof FiringEmployeeEvent) {
-            guestMgr.cancelGuestMeeting(event.getEmployee());
+            guestMgr.cancelGuestMeeting(event.getEmployee(), event.getDate());
         }
     }
 }

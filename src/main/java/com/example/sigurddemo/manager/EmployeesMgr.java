@@ -42,17 +42,14 @@ public class EmployeesMgr {
     @NonNull
     private final MessageSource messageSource;
     @NonNull
-    private final VirtualDate virtualDate;
-    @NonNull
     private ApplicationEventPublisher applicationEventPublisher;
 
     private Date nowVirtualDate;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private int counter = 0;
 
-    @Scheduled(fixedDelay = 1000)
-    private void generateVirtualDay() throws DateException {
-        nowVirtualDate = virtualDate.getDate();
+    public void newVirtualDate(Date date) {
+        nowVirtualDate = date;
 
         counter++;
         if (counter == 5) {
@@ -61,8 +58,6 @@ public class EmployeesMgr {
         } else {
             hiringEmployees();
         }
-
-        virtualDate.nextDay();
     }
 
     private void hiringEmployees() {
@@ -79,39 +74,46 @@ public class EmployeesMgr {
                     employee.setDepartment(department);
                 }
             } catch (Exception e) {
-                System.out.println(e);
+                System.out.println("Can't find department");
             }
             employeeService.save(employee);
         } catch (DataIntegrityViolationException de) {
-            System.out.println(de);
+            System.out.println("Cant' save an employee " + de);
             return;
         }
 
-        HiringEmployeeEvent hiringEmployeeEvent = new HiringEmployeeEvent(this, employee);
+        HiringEmployeeEvent hiringEmployeeEvent = new HiringEmployeeEvent(this, employee, nowVirtualDate);
         applicationEventPublisher.publishEvent(hiringEmployeeEvent);
 
         logger.info("{}", messageSource.getMessage("employee.hiring",
-                new Object[] {virtualDate.getDate(), employee.getId(), employee.getHireTime(), employee.getDepartment().getId()}, null, null));
+                new Object[] {nowVirtualDate, employee.getId(), employee.getHireTime(), employee.getDepartment().getId()}, null, null));
     }
 
     private void firingEmployees() {
         employeeService.getSpecificQuantityRandomEmployee().forEach(employee -> {
-            employee.setFiredTime(nowVirtualDate);
-            employeeService.save(employee);
+            if (checkFiringAfterHiring(employee)) {
+                employee.setFiredTime(nowVirtualDate);
+                employeeService.save(employee);
 
-            logger.info("{}", messageSource.getMessage("employee.firing",
-                    new Object[] {virtualDate.getDate(),
-                            employee.getId(),
-                            employee.getFiredTime(),
-                            employee.getDepartment().getId(),
-                            VirtualDate.dateDifferenceInDays(employee.getHireTime(), nowVirtualDate)},
-                    null, null));
+                logger.info("{}", messageSource.getMessage("employee.firing",
+                        new Object[] {nowVirtualDate,
+                                employee.getId(),
+                                employee.getFiredTime(),
+                                employee.getDepartment().getId(),
+                                VirtualDate.dateDifferenceInDays(employee.getHireTime(), nowVirtualDate)},
+                        null, null));
 
-            FiringEmployeeEvent firingEmployeeEvent = new FiringEmployeeEvent(this, employee);
-            applicationEventPublisher.publishEvent(firingEmployeeEvent);
+                FiringEmployeeEvent firingEmployeeEvent = new FiringEmployeeEvent(this, employee, nowVirtualDate);
+                applicationEventPublisher.publishEvent(firingEmployeeEvent);
+            } else {
+                System.out.println("Can't firing employee");
+            }
         }
         );
     }
 
+    private boolean checkFiringAfterHiring(Employee employee) {
+        return employee.getHireTime().before(nowVirtualDate);
+    }
 
 }

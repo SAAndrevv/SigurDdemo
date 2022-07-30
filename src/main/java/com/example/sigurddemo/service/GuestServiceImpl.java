@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 
 @Service
-@Transactional
+/*@Transactional*/
 public class GuestServiceImpl extends AbstractCommonPersonService<Guest, GuestRepository>{
 
     public GuestServiceImpl(@NonNull GuestRepository repository) {
@@ -20,7 +20,8 @@ public class GuestServiceImpl extends AbstractCommonPersonService<Guest, GuestRe
     public Guest deleteGuestByEmployeeId(Person person) throws Exception {
         Guest guest = repository.findGuestByPerson(person).orElse(null);
         if (guest != null) {
-            repository.deleteGuestByPerson(person);
+            guest.setVisitDate(null);
+            repository.save(guest);
         } else {
             throw new SqlTransactionException("Can't remove Guest. Meeting not scheduled with employee ", person.getId());
         }

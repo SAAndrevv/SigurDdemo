@@ -25,4 +25,8 @@ public class EmployeeServiceImpl extends AbstractCommonPersonService<Employee, E
         return repository.findSpecificQuantityEmployee(randCountEmpl);
     }
 
+    public Employee getEmployeeById(Long id) {
+        return repository.findEmployeeById(id).orElse(null);
+    }
+
 }

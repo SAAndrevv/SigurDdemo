@@ -3,12 +3,20 @@ package com.example.sigurddemo.event;
 import com.example.sigurddemo.model.Employee;
 import org.springframework.context.ApplicationEvent;
 
-public abstract class AbstractEmployeeEvent extends ApplicationEvent {
-    protected Employee employee;
+import java.util.Date;
 
-    public AbstractEmployeeEvent(Object source, Employee employee) {
+public abstract class AbstractEmployeeEvent extends ApplicationEvent implements CommonEmployeeEvent {
+    protected Employee employee;
+    private Date date;
+
+    public AbstractEmployeeEvent(Object source, Employee employee, Date date) {
         super(source);
         this.employee = employee;
+        this.date = date;
+    }
+
+    public Date getDate() {
+        return date;
     }
 
     public Employee getEmployee() {

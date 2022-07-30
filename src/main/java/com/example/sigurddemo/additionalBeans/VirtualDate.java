@@ -1,8 +1,13 @@
 package com.example.sigurddemo.additionalBeans;
 
+import com.example.sigurddemo.event.DateEvent;
 import com.example.sigurddemo.exception.DateException;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
@@ -11,15 +16,21 @@ import java.util.GregorianCalendar;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
+@RequiredArgsConstructor
 public class VirtualDate {
-
+    @NonNull
+    private ApplicationEventPublisher applicationEventPublisher;
     private static final Calendar virtualDate = new GregorianCalendar(2022, Calendar.JANUARY, 1);
 
-    public void nextDay() throws DateException{
+    @Scheduled(fixedDelay = 1000)
+    public void nextDay() throws DateException {
         virtualDate.add(Calendar.DAY_OF_MONTH, 1);
         if (virtualDate.get(Calendar.YEAR) == 2023) {
             throw new DateException(virtualDate.getTime());
         }
+
+        DateEvent dateEvent = new DateEvent(this, virtualDate.getTime());
+        applicationEventPublisher.publishEvent(dateEvent);
     }
     public Date getDate() {
         return virtualDate.getTime();
